@@ -13,14 +13,10 @@
             width: 40px;
             height: 40px;
             background-color: #eee;
-            background-image: url(img/sample.png);
-            opacity: 0.5;
+            margin: 5px;
         }
-        .tiles .tile.selected, .tiles .tile.selected:hover {
-            opacity: 1;
-        }
-        .tiles .tile:hover {
-            opacity: 0.8;
+        .tiles .tile.selected {
+            box-shadow: 0 0 5px #aaa;
         }
     </style>
     <title>2D map online editor</title>
@@ -34,11 +30,11 @@
     <div class="container">
 
         <p class="toolbar">
-            <button class="btn btn-primary" data-toggle="modal" data-target="#upload-sprite">Choose sprite</button>
+            <button class="btn btn-primary" data-toggle="modal" data-target="#choose-sprite">Choose sprite</button>
             <button class="btn btn-default">Add row</button>
             <button class="btn btn-default">Add column</button>
         </p>
-        <ul class="tiles">
+        <ul class="tiles" id="tiles">
             <li class="tile"></li>
             <li class="tile selected"></li>
             <li class="tile"></li>
@@ -48,7 +44,7 @@
             <tr><td></td><td></td></tr>
         </table>
     </div>
-    <div class="modal fade" tabindex="-1" role="dialog" id="upload-sprite">
+    <div class="modal fade" tabindex="-1" role="dialog" id="choose-sprite">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -56,38 +52,41 @@
                     <h4 class="modal-title">Choose a sprite</h4>
                 </div>
                 <div class="modal-body">
-                   <form action="" class="form-horizontal">
+                    <div id="choose-sprite-alerts">
+
+                    </div>
+                    <form action="" class="form-horizontal" id="choose-sprite-form">
                         <div class="form-group">
-                           <label for="upload-sprite-input" class="col-sm-2 control-label">Sprites</label>
-                           <div class="col-sm-10">
-                               <input type="file" id="upload-sprite-input">
-                           </div>
-                       </div>
-                       <div class="form-group">
-                           <label for="upload-sprite-width" class="col-sm-2 control-label">Width</label>
-                           <div class="col-sm-10">
-                               <input class="form-control" type="number" id="upload-sprite-width">
-                           </div>
-                       </div>
-                       <div class="form-group">
-                           <label for="upload-sprite-height" class="col-sm-2 control-label">Height</label>
-                           <div class="col-sm-10">
-                               <input class="form-control" type="number" id="upload-sprite-height">
-                           </div>
-                       </div>
-                   </form>
+                            <label for="choose-sprite-input" class="col-sm-2 control-label">Sprites</label>
+                            <div class="col-sm-10">
+                                <input type="file" id="choose-sprite-input">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="choose-sprite-width" class="col-sm-2 control-label">Width</label>
+                            <div class="col-sm-10">
+                                <input class="form-control" type="number" id="choose-sprite-width" value="32">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="choose-sprite-height" class="col-sm-2 control-label">Height</label>
+                            <div class="col-sm-10">
+                                <input class="form-control" type="number" id="choose-sprite-height" value="32">
+                            </div>
+                        </div>
+                    </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Choose</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" id="choose-sprite-submit">Choose</button>
                 </div>
             </div>
         </div>
     </div>
-</table>
-</div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="js/app.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/function.js"></script>
+    <script type="text/javascript" src="js/sub-pub.js"></script>
+    <script type="text/javascript" src="js/app.js"></script>
 </body>
 </html>
