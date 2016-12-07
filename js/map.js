@@ -47,9 +47,21 @@ Map_ = {
     },
 
     bindDom: function () {
-        var _this = this
-        this.$map.on('click', '.map-cell', function changeSprite() {
-            $(this).attr('data-nb', _this.selectedTileNb)
+        var _this = this;
+        _this.mouseIsPressed = false;
+        function updateSpriteNb() {
+            if (!_this.mouseIsPressed) {
+                return
+            }
+            $(this).attr('data-nb', _this.selectedTileNb);
+        }
+        $(document.body).on('mouseup', function saveMouseUp() {
+            _this.mouseIsPressed = false
         })
+
+        this.$map.on('mousedown', '.map-cell', function saveMouseDown() {
+            _this.mouseIsPressed = true
+            updateSpriteNb.call(this)
+        }).on('mousemove', '.map-cell', updateSpriteNb)
     }
 };
