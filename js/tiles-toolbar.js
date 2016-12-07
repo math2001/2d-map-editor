@@ -8,14 +8,6 @@ TilesToolbar = {
     listenEvents: function () {
         var _this = this
         EM.on('chooseNewSprites', this.updateTiles.bind(this))
-        // EM.on('chooseNewSprites', (function (infos) {
-        //     getImageSize(infos.image, (function (width, height) {
-        //         getBase64(infos.image, (function (base64) {
-        //             infos.base64 = base64.target.result;
-        //             this.updateTiles(infos, width, height);
-        //         }).bind(this))
-        //     }).bind(this))
-        // }).bind(this));
 
         EM.on('changedSelectedTile', function (infos) {
             _this.$tiles.find('.tile.selected').removeClass('selected');
@@ -40,7 +32,7 @@ TilesToolbar = {
 
     bindDom: function () {
         this.$tiles.on('click', '.tile', function fireChangeSelectedTile() {
-            EM.emit('changedSelectedTile', { target: this, nb: len($(this).prevAll()) - 1 })
+            EM.emit('changedSelectedTile', { target: this, nb: len($(this).prevAll()) })
         });
     }
 };
