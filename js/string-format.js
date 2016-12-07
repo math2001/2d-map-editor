@@ -93,5 +93,6 @@
   } else {
     global.format = format;
   }
-
 }.call(this, this));
+
+format.extend(String.prototype, {})

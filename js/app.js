@@ -9,7 +9,7 @@ var _URL = window.URL || window.webkitURL; // used to get the size of an image
 
     TilesToolbar.init();
     ChooseSprite.init();
-    Map_.init()
+    Exporter.init(Map_.init().$map);
 
 
 })})(jQuery)

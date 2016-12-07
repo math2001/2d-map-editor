@@ -32,8 +32,9 @@
 </head>
 <body>
     <div class="navbar navbar-default navbar-static-top">
-        <div class="navbar-innder">
+        <div class="container-fluid">
             <a href="/" class="navbar-brand">2D online map editor</a>
+            <button class="btn btn-primary navbar-btn navbar-right" id="export-toggler">Export</button>
         </div>
     </div>
     <div class="container">
@@ -89,17 +90,47 @@
             </div>
         </div>
     </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <div class="modal fade" tabindex="-1" role="dialog" id="export">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Export my map</h4>
+                </div>
+                <div class="modal-body">
+                    <h4>Download as</h4>
+                    <div class="btn-group" data-toggle="buttons" id="export-form">
+                        <label class="btn btn-default active">
+                            <input type="radio" name="export-format" data-convert-to="json" autocomplete="off" checked> JSON
+                        </label>
+                        <label class="btn btn-default">
+                            <input type="radio" name="export-format" data-convert-to="plain" autocomplete="off"> Plain
+                        </label>
+                    </div>
+                    <h4>Preview</h4>
+                    <pre id="export-preview"></pre>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" id="data-download">Download</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-    <script type="text/javascript" src="js/function.js"></script>
-    <script type="text/javascript" src="js/sub-pub.js"></script>
-    <script type="text/javascript" src="js/choose-sprite.js"></script>
-    <script type="text/javascript" src="js/tiles-toolbar.js"></script>
-    <script type="text/javascript" src="js/map.js"></script>
-    <script type="text/javascript" src="js/app.js"></script>
+<script type="text/javascript" src="js/string-format.js"></script>
+<script type="text/javascript" src="js/function.js"></script>
+<script type="text/javascript" src="js/sub-pub.js"></script>
+<script type="text/javascript" src="js/choose-sprite.js"></script>
+<script type="text/javascript" src="js/tiles-toolbar.js"></script>
+<script type="text/javascript" src="js/map.js"></script>
+<script type="text/javascript" src="js/exporter.js"></script>
+<script type="text/javascript" src="js/app.js"></script>
 
-    <script type="text/javascript">
+<script type="text/javascript">
         // $('#choose-sprite').modal('show');
     </script>
 

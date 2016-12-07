@@ -6,6 +6,7 @@ Map_ = {
         this.bindDom();
 
         this.selectedTileNb = null
+        return this
     },
 
     cacheDom: function () {
@@ -14,7 +15,7 @@ Map_ = {
     },
 
     initTable: function (rows, cols) {
-        var row = '<tr class="map-row">' + timeString('<td class="map-cell" data-nb=1></td>', cols) + '</tr>';
+        var row = '<tr class="map-row">' + timeString('<td class="map-cell" data-nb=0></td>', cols) + '</tr>';
 
         this.$map.html(timeString(row, rows));
     },
