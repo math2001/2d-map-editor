@@ -10,6 +10,18 @@ function getImageSize(file, callback) {
 
 function getBase64(file, callback) {
     var fr = new FileReader();
-    fr.onloadend = callback
+    fr.onloadend = function (data) {
+        callback(data.target.result)
+    }
     fr.readAsDataURL(file)
 }
+
+function timeString(string, times) {
+    var rtn = '';
+    for (var i = 0; i < times; i++) {
+        rtn += string
+    }
+    return rtn
+}
+
+len = el => el.length
