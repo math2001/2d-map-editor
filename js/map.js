@@ -4,9 +4,66 @@ Map_ = {
         this.initTable(5, 5);
         this.listenEvents();
         this.bindDom();
-
+        this.contextMenu();
         this.selectedTileNb = null
         return this
+    },
+
+    getMapWidth: function () {
+        return len(this.$map.children().first().children())
+    },
+
+    rowColsManager: function (key, opt) {
+        console.log(key, opt);
+        var $parent = opt.$trigger.parent('tr')
+        if (key == 'addBefore') {
+            $parent.before('<tr>{}</tr>'.format(timeString('<td class="map-cell" data-nb="0"></td>', this.getMapWidth())));
+        } else if (key == 'addAfter') {
+            $parent.after('<tr>{}</tr>'.format(timeString('<td class="map-cell" data-nb="0"></td>', this.getMapWidth())));
+        } else if (key == 'duplicateBefore') {
+            $parent.before('<tr>{}</tr>'.format($parent.html()));
+        } else if (key == 'duplicateAfter') {
+            $parent.after('<tr>{}</tr>'.format($parent.html()));
+        } else if (key == 'remove') {
+            $parent.remove();
+        } else {
+            throw new Error('Unknow key {} on context menu.'.format(key))
+        }
+    },
+
+    contextMenu: function () {
+        var _this = this
+
+        $.contextMenu({
+            selector: '.map-cell',
+            items: {
+                rows: {
+                    name: "Rows",
+                    items: {
+                        addBefore: {
+                            name: "Insert New Row Above",
+                            callback: _this.rowColsManager.bind(_this)
+                        },
+                        addAfter: {
+                            name: "Insert New Row Bellow",
+                            callback: _this.rowColsManager.bind(_this)
+                        },
+                        duplicateBefore: {
+                            name: "Duplicate And Insert Above",
+                            callback: _this.rowColsManager.bind(_this)
+                        },
+                        duplicateAfter: {
+                            name: "Duplicate And Insert Bellow",
+                            callback: _this.rowColsManager.bind(_this)
+                        },
+                        remove: {
+                            name: "Remove",
+                            callback: _this.rowColsManager.bind(_this)
+                        }
+                    }
+                }
+            }
+        })
     },
 
     cacheDom: function () {
@@ -51,18 +108,18 @@ Map_ = {
         var _this = this;
         _this.mouseIsPressed = false;
         function updateSpriteNb() {
-            if (!_this.mouseIsPressed) {
-                return
-            }
+            if (!_this.mouseIsPressed) { return }
             $(this).attr('data-nb', _this.selectedTileNb);
         }
-        $(document.body).on('mouseup', function saveMouseUp() {
-            _this.mouseIsPressed = false
+        $(document.body).on('mouseup', function saveMouseUp(e) {
+            if (e.button != 0) { return }
+            _this.mouseIsPressed = false;
         })
 
-        this.$map.on('mousedown', '.map-cell', function saveMouseDown() {
+        this.$map.on('mousedown', '.map-cell', function saveMouseDown(e) {
+            if (e.button != 0) { return }
             _this.mouseIsPressed = true
             updateSpriteNb.call(this)
-        }).on('mousemove', '.map-cell', updateSpriteNb)
+        }).on('mousemove', '.map-cell', updateSpriteNb);
     }
 };
