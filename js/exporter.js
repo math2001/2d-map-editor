@@ -3,13 +3,21 @@ Exporter = {
     init: function ($map) {
         this.cacheDom($map);
         this.bindDom();
+        this.listenEvents();
+    },
+
+    listenEvents: function () {
+        var _this = this
+        EM.on('chooseNewSprites', function saveSpritesName(data) {
+            _this.spritesName = data.image.name.split('.').slice(0, -1).join('.')
+        })
     },
 
     cacheDom: function ($map) {
         this.$modal = $('#export');
         this.$preview = this.$modal.find('#export-preview');
         this.$form = this.$modal.find('#export-form');
-        this.$download = $('#export-dowload');
+        this.$download = $('#export-download');
         this.$toggler = $('#export-toggler');
         this.$formatBtn = this.$modal.find('[name="export-format"]')
         this.$map = $map;
@@ -17,6 +25,11 @@ Exporter = {
     bindDom: function () {
         this.$toggler.bind('click', this.updatePreview.bind(this));
         this.$formatBtn.bind('change', this.updatePreview.bind(this));
+        this.$download.bind('click', this.download.bind(this));
+    },
+
+    download: function () {
+        download('{}.{}'.format(this.spritesName || 'map', this.format), this.preview)
     },
 
     convertMapToObject: function () {
@@ -55,7 +68,9 @@ Exporter = {
     },
 
     updatePreview: function () {
-        this.$preview.html(this.convertObjTo(this.$form.find('label.active').find('input').data('convert-to'), this.convertMapToObject()));
+        this.format = this.$form.find('label.active').find('input').data('convert-to');
+        this.preview = this.convertObjTo(this.format, this.convertMapToObject())
+        this.$preview.html(this.preview);
         this.$modal.modal('show');
     }
 

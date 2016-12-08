@@ -4,6 +4,8 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- to work offline -->
+    <!-- <link rel="stylesheet" href="css/bootstrap.min.css"> -->
     <style type="text/css">
         .tiles {
             padding: 0;
@@ -27,6 +29,9 @@
             height: 32px;
             border: 1px solid #333;
         }
+        pre {
+            white-space: pre-wrap;
+        }
     </style>
     <title>2D map online editor</title>
 </head>
@@ -34,7 +39,7 @@
     <div class="navbar navbar-default navbar-static-top">
         <div class="container-fluid">
             <a href="/" class="navbar-brand">2D online map editor</a>
-            <button class="btn btn-primary navbar-btn navbar-right" id="export-toggler">Export</button>
+            <button class="btn btn-primary navbar-btn navbar-right" id="export-toggler" style="margin-right: 5px;">Export</button>
         </div>
     </div>
     <div class="container">
@@ -45,11 +50,9 @@
             <button class="btn btn-default">Add column</button>
         </p>
         <ul class="tiles" id="tiles">
-            <li class="tile"></li>
-            <li class="tile selected"></li>
-            <li class="tile"></li>
+            <li class="mute">Choose some sprites...</li>
         </ul>
-        <table id="map"><tr class="map-row"><td class="map-cell"></td><td class="map-cell"></td><td class="map-cell"></td><td class="map-cell"></td><td class="map-cell"></td></tr><tr class="map-row"><td class="map-cell"></td><td class="map-cell"></td><td class="map-cell"></td><td class="map-cell"></td><td class="map-cell"></td></tr><tr class="map-row"><td class="map-cell"></td><td class="map-cell"></td><td class="map-cell"></td><td class="map-cell"></td><td class="map-cell"></td></tr><tr class="map-row"><td class="map-cell"></td><td class="map-cell"></td><td class="map-cell"></td><td class="map-cell"></td><td class="map-cell"></td></tr><tr class="map-row"><td class="map-cell"></td><td class="map-cell"></td><td class="map-cell"></td><td class="map-cell"></td><td class="map-cell"></td></tr></table>
+        <table id="map"></table>
     </div>
     <div class="modal fade" tabindex="-1" role="dialog" id="choose-sprite">
         <div class="modal-dialog" role="document">
@@ -112,12 +115,17 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal" id="data-download">Download</button>
+                    <button type="button" class="btn btn-primary" id="export-download">Download</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<!-- to work offline -->
+<!-- <script src="js/jquery.min.js"></script> -->
+<!-- <script src="js/bootstrap.min.js"></script> -->
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
