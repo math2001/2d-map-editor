@@ -5,21 +5,23 @@ Map_ = {
         this.listenEvents();
         this.bindDom();
         this.contextMenu();
-        this.selectedTileNb = null
-        return this
+        this.selectedTileNb = null;
+
+        Map_.TD_CELL_HTML = '<td class="map-cell" data-nb="0"></td>'
+
+        return this;
     },
 
-    getMapWidth: function () {
-        return len(this.$map.children().first().children())
+    getWidth: function () {
+        return len(this.$map.children().first().children());
     },
 
-    rowColsManager: function (key, opt) {
-        console.log(key, opt);
-        var $parent = opt.$trigger.parent('tr')
+    rowsManager: function (key, opt) {
+        var $parent = opt.$trigger.parent('tr');
         if (key == 'addBefore') {
-            $parent.before('<tr>{}</tr>'.format(timeString('<td class="map-cell" data-nb="0"></td>', this.getMapWidth())));
+            $parent.before('<tr>{}</tr>'.format(timeString(Map_.TD_CELL_HTML, this.getWidth())));
         } else if (key == 'addAfter') {
-            $parent.after('<tr>{}</tr>'.format(timeString('<td class="map-cell" data-nb="0"></td>', this.getMapWidth())));
+            $parent.after('<tr>{}</tr>'.format(timeString(Map_.TD_CELL_HTML, this.getWidth())));
         } else if (key == 'duplicateBefore') {
             $parent.before('<tr>{}</tr>'.format($parent.html()));
         } else if (key == 'duplicateAfter') {
@@ -27,7 +29,39 @@ Map_ = {
         } else if (key == 'remove') {
             $parent.remove();
         } else {
-            throw new Error('Unknow key {} on context menu.'.format(key))
+            throw new Error('Unknow key {} on context menu.'.format(key));
+        }
+    },
+
+    colsManager: function (key, opt) {
+        var $current_row = opt.$trigger.parent('tr');
+        var $rows = $current_row.parent().children();
+        var index = $current_row.children().index(opt.$trigger);
+        var $el = null;
+        if (key == 'addBefore') {
+            $rows.each(function (i, row) {
+                $($(row).children().get(index)).before(Map_.TD_CELL_HTML);
+            });
+        } else if (key == 'addAfter') {
+            $rows.each(function (i, row) {
+                $($(row).children().get(index)).after(Map_.TD_CELL_HTML);
+            });
+        } else if (key == 'duplicateBefore') {
+            $rows.each(function (i, row) {
+                $el = $($(row).children().get(index));
+                $el.before('<td class="map-cell" data-nb="{}"></td>'.format($el.data('nb')));
+            });
+        } else if (key == 'duplicateAfter') {
+            $rows.each(function (i, row) {
+                $el = $($(row).children().get(index));
+                $el.after('<td class="map-cell" data-nb="{}"></td>'.format($el.data('nb')));
+            });
+        } else if (key == 'remove') {
+            $rows.each(function (i, row) {
+                $($(row).children().get(index)).remove();
+            })
+        } else {
+            throw new Error('Unknow key {} on context menu.'.format(key));
         }
     },
 
@@ -41,24 +75,49 @@ Map_ = {
                     name: "Rows",
                     items: {
                         addBefore: {
-                            name: "Insert New Row Above",
-                            callback: _this.rowColsManager.bind(_this)
+                            name: "Insert Empty Row Above",
+                            callback: _this.rowsManager.bind(_this)
                         },
                         addAfter: {
-                            name: "Insert New Row Bellow",
-                            callback: _this.rowColsManager.bind(_this)
+                            name: "Insert Empty Row Bellow",
+                            callback: _this.rowsManager.bind(_this)
                         },
                         duplicateBefore: {
                             name: "Duplicate And Insert Above",
-                            callback: _this.rowColsManager.bind(_this)
+                            callback: _this.rowsManager.bind(_this)
                         },
                         duplicateAfter: {
                             name: "Duplicate And Insert Bellow",
-                            callback: _this.rowColsManager.bind(_this)
+                            callback: _this.rowsManager.bind(_this)
                         },
                         remove: {
                             name: "Remove",
-                            callback: _this.rowColsManager.bind(_this)
+                            callback: _this.rowsManager.bind(_this)
+                        }
+                    }
+                },
+                cols: {
+                    name: "Cols",
+                    items: {
+                        addBefore: {
+                            name: "Insert Empty Column To The Left",
+                            callback: _this.colsManager.bind(_this)
+                        },
+                        addAfter: {
+                            name: "Insert Empty Column To The Right",
+                            callback: _this.colsManager.bind(_this)
+                        },
+                        duplicateBefore: {
+                            name: "Duplicate And Insert To The Left",
+                            callback: _this.colsManager.bind(_this)
+                        },
+                        duplicateAfter: {
+                            name: "Duplicate And Insert To The Right",
+                            callback: _this.colsManager.bind(_this)
+                        },
+                        remove: {
+                            name: "Remove",
+                            callback: _this.colsManager.bind(_this)
                         }
                     }
                 }
