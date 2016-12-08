@@ -41,7 +41,7 @@ Exporter = {
             $cols = $($rows[i]).children();
             row = []
             for (var j = 0; j < $cols.length; j++) {
-                row.push($($cols[j]).attr('data-nb'))
+                row.push(parseInt($($cols[j]).attr('data-nb')))
             }
             map.push(row);
         }
@@ -51,19 +51,18 @@ Exporter = {
     convertObjTo: function (type, obj) {
         if (type == 'plain') {
 
-            var text = ''
+            var text = '';
             for (var i = 0; i < obj.length; i++) {
                 for (var j = 0; j < obj[i].length; j++) {
                     text += obj[i][j];
                 }
                 text += '\n';
             }
-            return text
+            return text;
         } else if (type == 'json') {
-            return JSON.stringify(obj)
+            return JSON.stringify(obj);
         } else {
-            format('hello {}', 'matt')
-            throw new Error('Wrong type to convert map to ({})'.format(type))
+            throw new Error('Wrong type to convert map to ({})'.format(type));
         }
     },
 
