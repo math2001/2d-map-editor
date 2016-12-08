@@ -66,7 +66,7 @@ Map_ = {
     },
 
     contextMenu: function () {
-        var _this = this
+        var _this = this;
 
         $.contextMenu({
             selector: '.map-cell',
@@ -76,23 +76,28 @@ Map_ = {
                     items: {
                         addBefore: {
                             name: "Insert Empty Row Above",
-                            callback: _this.rowsManager.bind(_this)
+                            callback: _this.rowsManager.bind(_this),
+                            accesskey: "i"
                         },
                         addAfter: {
                             name: "Insert Empty Row Bellow",
-                            callback: _this.rowsManager.bind(_this)
+                            callback: _this.rowsManager.bind(_this),
+                            accesskey: "n"
                         },
                         duplicateBefore: {
                             name: "Duplicate And Insert Above",
-                            callback: _this.rowsManager.bind(_this)
+                            callback: _this.rowsManager.bind(_this),
+                            accesskey: "d"
                         },
                         duplicateAfter: {
                             name: "Duplicate And Insert Bellow",
-                            callback: _this.rowsManager.bind(_this)
+                            callback: _this.rowsManager.bind(_this),
+                            accesskey: "u"
                         },
                         remove: {
                             name: "Remove",
-                            callback: _this.rowsManager.bind(_this)
+                            callback: _this.rowsManager.bind(_this),
+                            accesskey: "r"
                         }
                     }
                 },
@@ -101,23 +106,28 @@ Map_ = {
                     items: {
                         addBefore: {
                             name: "Insert Empty Column To The Left",
-                            callback: _this.colsManager.bind(_this)
+                            callback: _this.colsManager.bind(_this),
+                            accesskey: "i"
                         },
                         addAfter: {
                             name: "Insert Empty Column To The Right",
-                            callback: _this.colsManager.bind(_this)
+                            callback: _this.colsManager.bind(_this),
+                            accesskey: "n"
                         },
                         duplicateBefore: {
                             name: "Duplicate And Insert To The Left",
-                            callback: _this.colsManager.bind(_this)
+                            callback: _this.colsManager.bind(_this),
+                            accesskey: "d"
                         },
                         duplicateAfter: {
                             name: "Duplicate And Insert To The Right",
-                            callback: _this.colsManager.bind(_this)
+                            callback: _this.colsManager.bind(_this),
+                            accesskey: "u"
                         },
                         remove: {
                             name: "Remove",
-                            callback: _this.colsManager.bind(_this)
+                            callback: _this.colsManager.bind(_this),
+                            accesskey: "r"
                         }
                     }
                 }
