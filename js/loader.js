@@ -19,7 +19,6 @@ Loader = {
         var type = file.name.split('.').slice(-1);
         // simply loads the content of the file in this case.
         getContent(file, function (content) {
-            console.log('fire');
             EM.emit('newMapLoaded', { file, content, type });
         })
     },

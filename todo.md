@@ -7,3 +7,4 @@
 - change tile focus with the keyboard
 - load from file
 - export in different format
+- change context menu css

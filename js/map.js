@@ -171,8 +171,6 @@ Map_ = {
         }
 
         function updateMap(data) {
-            console.log('update map');
-            console.log(data.content);
             _this.convertObjToMap(_this.convertXToObj(data.type, data.content));
         }
 
@@ -220,7 +218,6 @@ Map_ = {
     },
 
     convertObjToMap: function (rows) {
-        console.log(rows);
         var html = '';
         for (var i = 0; i < rows.length; i++) {
             html += '<tr class="map-row">';
