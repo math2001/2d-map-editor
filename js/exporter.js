@@ -49,7 +49,7 @@ Exporter = {
     },
 
     convertObjTo: function (type, obj) {
-        if (type == 'plain') {
+        if (type == 'txt') {
 
             var text = '';
             for (var i = 0; i < obj.length; i++) {

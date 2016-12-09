@@ -19,13 +19,13 @@ Map_ = {
     rowsManager: function (key, opt) {
         var $parent = opt.$trigger.parent('tr');
         if (key == 'addBefore') {
-            $parent.before('<tr>{}</tr>'.format(timeString(Map_.TD_CELL_HTML, this.getWidth())));
+            $parent.before('<tr class="map-row">{}</tr>'.format(timeString(Map_.TD_CELL_HTML, this.getWidth())));
         } else if (key == 'addAfter') {
-            $parent.after('<tr>{}</tr>'.format(timeString(Map_.TD_CELL_HTML, this.getWidth())));
+            $parent.after('<tr class="map-row">{}</tr>'.format(timeString(Map_.TD_CELL_HTML, this.getWidth())));
         } else if (key == 'duplicateBefore') {
-            $parent.before('<tr>{}</tr>'.format($parent.html()));
+            $parent.before('<tr class="map-row">{}</tr>'.format($parent.html()));
         } else if (key == 'duplicateAfter') {
-            $parent.after('<tr>{}</tr>'.format($parent.html()));
+            $parent.after('<tr class="map-row">{}</tr>'.format($parent.html()));
         } else if (key == 'remove') {
             $parent.remove();
         } else {
@@ -170,7 +170,15 @@ Map_ = {
             $(document.head).append($('<style></style>').attr('type', 'text/css').html(css))
         }
 
+        function updateMap(data) {
+            console.log('update map');
+            console.log(data.content);
+            _this.convertObjToMap(_this.convertXToObj(data.type, data.content));
+        }
+
         EM.on('chooseNewSprites', updateStyleSheet);
+
+        EM.on('newMapLoaded', updateMap);
     },
 
     bindDom: function () {
@@ -190,5 +198,38 @@ Map_ = {
             _this.mouseIsPressed = true
             updateSpriteNb.call(this)
         }).on('mousemove', '.map-cell', updateSpriteNb);
-    }
+    },
+
+    convertXToObj: function (type, string) {
+        var map = [], row;
+        if (type == 'txt') {
+            var rows = string.split('\n');
+            for (var i = 0; i < rows.length; i++) {
+                row = [];
+                for (var j = 0; j < rows[i].length; j++) {
+                    row.push(parseInt(rows[i][j]));
+                }
+                map.push(row);
+            }
+            return map
+        } else if (type === 'json') {
+            return JSON.parse(string);
+        } else {
+            throw new Error('Wrong type to convert map from ({})'.format(type));
+        }
+    },
+
+    convertObjToMap: function (rows) {
+        console.log(rows);
+        var html = '';
+        for (var i = 0; i < rows.length; i++) {
+            html += '<tr class="map-row">';
+            for (var j = 0; j < rows[i].length; j++) {
+                html += '<td class="map-cell" data-nb="{}"></td>'.format(rows[i][j]);
+            }
+            html += '</tr>';
+        }
+        this.$map.html(html);
+        return html
+    },
 };

@@ -16,6 +16,14 @@ function getBase64(file, callback) {
     fr.readAsDataURL(file)
 }
 
+function getContent(file, callback) {
+    var fr = new FileReader();
+    fr.onloadend = function (data) {
+        callback(data.target.result)
+    }
+    fr.readAsText(file)
+}
+
 function timeString(string, times) {
     var rtn = '';
     for (var i = 0; i < times; i++) {
