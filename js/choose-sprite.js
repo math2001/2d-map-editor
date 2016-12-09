@@ -42,7 +42,7 @@ ChooseSprite = {
         [width, height] = [parseInt(width), parseInt(height)]
         getImageSize(image, function (fullWidth, fullHeight) {
             getBase64(image, function (base64) {
-                EM.emit('chooseNewSprites', { image, fullWidth, fullHeight, width, height, base64 })
+                EM.emit('chooseNewSprites', { imageName: image.name, fullWidth, fullHeight, width, height, base64 })
             })
         })
 

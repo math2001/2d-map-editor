@@ -5,7 +5,12 @@ function getImageSize(file, callback) {
     img.onload = function () {
         callback(this.width, this.height);
     };
-    img.src = _URL.createObjectURL(file);
+    if (typeof file === 'string') {
+        // file is base64
+        img.src = file;
+    } else {
+        img.src = _URL.createObjectURL(file);
+    }
 }
 
 function getBase64(file, callback) {

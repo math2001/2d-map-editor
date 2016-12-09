@@ -7,10 +7,17 @@ Exporter = {
     },
 
     listenEvents: function () {
-        var _this = this
+        var _this = this;
         EM.on('chooseNewSprites', function saveSpritesName(data) {
-            _this.spritesName = data.image.name.split('.').slice(0, -1).join('.')
-        })
+            _this.sprites = data;
+            return
+            _this.sprites.name = data.imageName.split('.').slice(0, -1).join('.');
+            _this.sprites.base64 = data.base64;
+            _this.sprites.fullWidth = data.fullWidth;
+            _this.sprites.fullHeight = data.fullHeight;
+            _this.sprites.width = data.width;
+            _this.sprites.height = data.height;
+        });
     },
 
     cacheDom: function ($map) {
@@ -22,6 +29,7 @@ Exporter = {
         this.$formatBtn = this.$modal.find('[name="export-format"]')
         this.$map = $map;
     },
+
     bindDom: function () {
         this.$toggler.bind('click', this.updatePreview.bind(this));
         this.$formatBtn.bind('change', this.updatePreview.bind(this));
@@ -50,7 +58,6 @@ Exporter = {
 
     convertObjTo: function (type, obj) {
         if (type == 'txt') {
-
             var text = '';
             for (var i = 0; i < obj.length; i++) {
                 for (var j = 0; j < obj[i].length; j++) {
@@ -61,6 +68,10 @@ Exporter = {
             return text;
         } else if (type == 'json') {
             return JSON.stringify(obj);
+        } else if (type == '2d-map') {
+            return JSON.stringify($.extend({
+                map: obj
+            }, this.sprites));
         } else {
             throw new Error('Wrong type to convert map to ({})'.format(type));
         }

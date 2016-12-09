@@ -17,13 +17,25 @@ Loader = {
         // !!! Check that there is a file
         var file = this.$input[0].files[0];
         var type = file.name.split('.').slice(-1);
+        if (type == '2d-map') {
+            return getContent(file, function (content) {
+                var data = JSON.parse(content);
+                EM.emit('newMapLoaded', { content: JSON.stringify(data.map), type: 'json' })
+                delete data.map
+                EM.emit('chooseNewSprites', data);
+            })
+        }
         // simply loads the content of the file in this case.
         getContent(file, function (content) {
-            EM.emit('newMapLoaded', { file, content, type });
+            EM.emit('newMapLoaded', { content, type });
         })
     },
 
     bindDom: function () {
-        this.$submit.bind('click', this.fireNewMapLoaded.bind(this));
+        var _this = this;
+        this.$submit.bind('click', function submitLoad() {
+            _this.fireNewMapLoaded.call(_this);
+            _this.$modal.modal('hide');
+        });
     },
 }

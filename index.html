@@ -39,13 +39,16 @@
 <body>
     <div class="navbar navbar-default navbar-static-top">
         <div class="container-fluid">
-            <a href="/" class="navbar-brand">2D online map editor</a>
-            <p class="navbar-text navbar-right">
-                <button class="btn btn-default" id="load-toggler" data-toggle="modal" data-target="#load">Load</button>
-                <button class="btn btn-primary" id="export-toggler" style="margin-right: 5px;">Export</button>
-            </p>
+            <div class="navbar-header">
+                <a href="/2d-map-editor" class="navbar-brand">2D online map editor</a>
+            </div>
+            <div class="navbar-right" style="padding-right: 5px;">
+                <button class="btn btn-default navbar-btn" id="load-toggler" data-toggle="modal" data-target="#load">Load</button>
+                <button class="btn btn-primary navbar-btn" id="export-toggler">Export</button>
+            </div>
         </div>
     </div>
+
     <div class="container">
 
         <p class="toolbar">
@@ -103,13 +106,16 @@
                     <h4 class="modal-title">Export my map</h4>
                 </div>
                 <div class="modal-body">
-                    <h4>Download as</h4>
+                    <h4>Download</h4>
                     <div class="btn-group" data-toggle="buttons" id="export-form">
-                        <label class="btn btn-default active">
-                            <input type="radio" name="export-format" data-convert-to="json" autocomplete="off" checked> JSON
+                        <label class="btn btn-default">
+                            <input type="radio" name="export-format" data-convert-to="json" autocomplete="off"> JSON
                         </label>
                         <label class="btn btn-default">
                             <input type="radio" name="export-format" data-convert-to="txt" autocomplete="off"> Plain
+                        </label>
+                        <label class="btn btn-default active">
+                            <input type="radio" name="export-format" data-convert-to="2d-map" autocomplete="off" checked> Map
                         </label>
                     </div>
                     <h4>Preview</h4>
