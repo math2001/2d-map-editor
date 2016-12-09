@@ -1,4 +1,4 @@
-ChooseSprite = {
+ChooseSprite = Base.extend({
 
     init: function () {
         this.cacheDom();
@@ -52,4 +52,4 @@ ChooseSprite = {
         this.$submit.bind('click', this.fireUpdateSprites.bind(this));
     }
 
-};
+});

@@ -1,4 +1,4 @@
-Map_ = {
+Map_ = Base.extend({
     init: function () {
         this.cacheDom();
         this.initTable(5, 5);
@@ -7,7 +7,7 @@ Map_ = {
         this.contextMenu();
         this.selectedTileNb = null;
 
-        Map_.TD_CELL_HTML = '<td class="map-cell" data-nb="0"></td>'
+        Map_.TD_CELL_HTML = '<td class="map-cell" data-nb="0"></td>';
 
         return this;
     },
@@ -137,7 +137,7 @@ Map_ = {
 
     cacheDom: function () {
         this.$map = $('#map');
-        this.$styleSheet = $('#map-stylesheet')
+        this.$styleSheet = $('#map-stylesheet');
     },
 
     initTable: function (rows, cols) {
@@ -147,9 +147,9 @@ Map_ = {
     },
 
     listenEvents: function () {
-        var _this = this
+        var _this = this;
         EM.on('changedSelectedTile', function shareToClass(data) {
-            _this.selectedTileNb = data.nb
+            _this.selectedTileNb = data.nb;
         });
 
         function updateStyleSheet(data) {
@@ -162,16 +162,16 @@ Map_ = {
             // 6 7 8 9 10
             for (var y = 0; y < nbSpriteHeight; y++) {
                 for (var x = 0; x < nbSpriteWidth; x++) {
-                    css += `.map-cell[data-nb="${i}"] {background-position: ${x * data.width}px ${y * data.height}px; } `
-                    i++
+                    css += `.map-cell[data-nb="${i}"] {background-position: ${x * data.width}px ${y * data.height}px; } `;
+                    i++;
                 }
             }
-            _this.$styleSheet.remove()
-            $(document.head).append($('<style></style>').attr('type', 'text/css').html(css))
+            _this.$styleSheet.remove();
+            $(document.head).append($('<style></style>').attr('type', 'text/css').html(css));
         }
 
         function updateMap(data) {
-            _this.convertObjToMap(_this.convertXToObj(data.type, data.content));
+            _this.convertObjToMap(_this.convertXToObj(data.type, data.content, data.onUserError));
         }
 
         EM.on('chooseNewSprites', updateStyleSheet);
@@ -183,7 +183,7 @@ Map_ = {
         var _this = this;
         _this.mouseIsPressed = false;
         function updateSpriteNb() {
-            if (!_this.mouseIsPressed) { return }
+            if (!_this.mouseIsPressed) { return; }
             $(this).attr('data-nb', _this.selectedTileNb);
         }
         $(document.body).on('mouseup', function saveMouseUp(e) {
@@ -213,7 +213,7 @@ Map_ = {
         } else if (type === 'json') {
             return JSON.parse(string);
         } else {
-            throw new Error('Wrong type to convert map from ({})'.format(type));
+            throw new UserError('Wrong type to convert map from ({})'.format(type));
         }
     },
 
@@ -229,4 +229,4 @@ Map_ = {
         this.$map.html(html);
         return html
     },
-};
+});

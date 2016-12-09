@@ -51,3 +51,14 @@ function download(filename, text) {
 
     document.body.removeChild(element);
 }
+
+function stripTags(string) {
+    return $('<p></p>').html(string).text();
+}
+
+
+var UserError = function (message) {
+    var err = new Error(message);
+    err.name = 'UserError';
+    return err;
+}

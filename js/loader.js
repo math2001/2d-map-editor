@@ -1,21 +1,27 @@
-Loader = {
+Loader = Base.extend({
 
-    // Load a map from a file, and fires the event newMapLoaded
+    // load sprites, map, or 2d-map
 
     init: function () {
         this.cacheDom();
         this.bindDom();
+        this.$spritesInfos.hide();
     },
 
     cacheDom: function () {
         this.$modal = $('#load');
         this.$input = this.$modal.find('#load-input');
         this.$submit = $('#load-submit');
+        this.$alertsArea = this.$modal.find('.alerts-area');
+        this.$spritesInfos = this.$modal.find('#load-sprites-infos')
     },
 
-    fireNewMapLoaded: function (e) {
-        // !!! Check that there is a file
+    fireEvent: function (e) {
         var file = this.$input[0].files[0];
+        if (!file) {
+            this.showAlert('error', 'You need to choose a file.');
+            return 'keep open';
+        }
         var type = file.name.split('.').slice(-1);
         if (type == '2d-map') {
             return getContent(file, function (content) {
@@ -31,11 +37,23 @@ Loader = {
         })
     },
 
+    toggleSpriteInfo: function (e) {
+        console.log(e.data._this.$spritesInfos.length);
+        if (e.data._this.$input[0].files[0].type.match(/image.*/)) {
+            e.data._this.$spritesInfos.slideDown();
+        } else {
+            e.data._this.$spritesInfos.slideUp();
+        }
+    },
+
     bindDom: function () {
         var _this = this;
         this.$submit.bind('click', function submitLoad() {
-            _this.fireNewMapLoaded.call(_this);
-            _this.$modal.modal('hide');
+            if (!_this.fireEvent.call(_this)) {
+                _this.$modal.modal('hide');
+            }
         });
+
+        this.$input.bind('change', {_this: this}, this.toggleSpriteInfo);
     },
-}
+});

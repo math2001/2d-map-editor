@@ -1,4 +1,4 @@
-Exporter = {
+Exporter = Base.extend({
 
     init: function ($map) {
         this.cacheDom($map);
@@ -10,13 +10,6 @@ Exporter = {
         var _this = this;
         EM.on('chooseNewSprites', function saveSpritesName(data) {
             _this.sprites = data;
-            return
-            _this.sprites.name = data.imageName.split('.').slice(0, -1).join('.');
-            _this.sprites.base64 = data.base64;
-            _this.sprites.fullWidth = data.fullWidth;
-            _this.sprites.fullHeight = data.fullHeight;
-            _this.sprites.width = data.width;
-            _this.sprites.height = data.height;
         });
     },
 
@@ -28,6 +21,7 @@ Exporter = {
         this.$toggler = $('#export-toggler');
         this.$formatBtn = this.$modal.find('[name="export-format"]')
         this.$map = $map;
+        this.$alertsArea = this.$modal.find('.alerts-area');
     },
 
     bindDom: function () {
@@ -69,11 +63,15 @@ Exporter = {
         } else if (type == 'json') {
             return JSON.stringify(obj);
         } else if (type == '2d-map') {
+            if (!this.sprites) {
+                this.showAlert('error', 'You need to choose some sprites before to save it as a <code>.2d-map</code>.');
+
+            }
             return JSON.stringify($.extend({
                 map: obj
             }, this.sprites));
         } else {
-            throw new Error('Wrong type to convert map to ({})'.format(type));
+            this.showAlert('error', 'Wrong type to convert map to ({}). Internal Error'.format(type));
         }
     },
 
@@ -82,6 +80,14 @@ Exporter = {
         this.preview = this.convertObjTo(this.format, this.convertMapToObject())
         this.$preview.html(this.preview);
         this.$modal.modal('show');
+    },
+
+    showAlert: function (type, msg) {
+        if (type == 'error') { type = 'danger'; }
+        if (type == 'danger') {
+            console.error(stripTags(msg));
+        }
+        this.$alertsArea.append('<div class="alert alert-{}"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>{}</div>'.format(type, msg));
     }
 
-}
+});

@@ -52,7 +52,7 @@
     <div class="container">
 
         <p class="toolbar">
-            <button class="btn btn-primary" data-toggle="modal" data-target="#choose-sprite">Choose sprite</button>
+            <button class="btn btn-primary" data-toggle="modal" data-target="#choose-sprite">Choose sprites</button>
         </p>
         <ul class="tiles" id="tiles">
             <li class="mute">Choose some sprites...</li>
@@ -64,7 +64,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Choose a sprite</h4>
+                    <h4 class="modal-title">Choose some sprites (in one image)</h4>
                 </div>
                 <div class="modal-body">
                     <div id="choose-sprite-alerts">
@@ -106,6 +106,7 @@
                     <h4 class="modal-title">Export my map</h4>
                 </div>
                 <div class="modal-body">
+                    <div class="alerts-area"></div>
                     <h4>Download</h4>
                     <div class="btn-group" data-toggle="buttons" id="export-form">
                         <label class="btn btn-default">
@@ -115,7 +116,7 @@
                             <input type="radio" name="export-format" data-convert-to="txt" autocomplete="off"> Plain
                         </label>
                         <label class="btn btn-default active">
-                            <input type="radio" name="export-format" data-convert-to="2d-map" autocomplete="off" checked> Map
+                            <input type="radio" name="export-format" data-convert-to="2d-map" autocomplete="off" checked> 2D Map
                         </label>
                     </div>
                     <h4>Preview</h4>
@@ -133,10 +134,40 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Load a map</h4>
+                    <h4 class="modal-title">Load a file</h4>
                 </div>
                 <div class="modal-body">
-                    <p><input type="file" id="load-input"></p>
+                    <div class="alerts-area"></div>
+                    <!-- <p>You can load a simple map (see the <code>export</code> modal to see the different format we use), or a map and sprite file (<code>.2d-map</code>). The advantage with the second option is that you don't need to choose a sprite.</p> -->
+                    <p>You can load different type of file:</p>
+                    <ul>
+                        <li>An image: it has to be sprites.</li>
+                        <li>A map: (<code>.json</code>, <code>.txt</code>)</li>
+                        <li>A <code>.2d-map</code>: it is a <code>json</code> file that contains the sprites and the map</li>
+                    </ul>
+                    <hr>
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label for="load-input" class="col-sm-2 control-label">File</label>
+                            <div class="col-sm-10">
+                                <input type="file" id="load-input">
+                            </div>
+                        </div>
+                        <div id="load-sprites-infos">
+                            <div class="form-group">
+                                <label for="load-sprites-width" class="col-sm-2 control-label">Width</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" type="number" id="load-sprites-width" value="32">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="load-sprites-height" class="col-sm-2 control-label">Height</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" type="number" id="load-sprites-height" value="32">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -158,16 +189,19 @@
 <script type="text/javascript" src="js/tools/string-format.js"></script>
 <script type="text/javascript" src="js/tools/function.js"></script>
 
+<script type="text/javascript" src="js/base.js"></script>
+
 <script type="text/javascript" src="js/sub-pub.js"></script>
 <script type="text/javascript" src="js/choose-sprite.js"></script>
 <script type="text/javascript" src="js/tiles-toolbar.js"></script>
 <script type="text/javascript" src="js/map.js"></script>
+<script type="text/javascript" src="js/map-converter.js"></script>
 <script type="text/javascript" src="js/exporter.js"></script>
 <script type="text/javascript" src="js/loader.js"></script>
 <script type="text/javascript" src="js/app.js"></script>
 
 <script type="text/javascript">
-    // $('#load').modal('show');
+    $('#load').modal('show');
 </script>
 
 </body>

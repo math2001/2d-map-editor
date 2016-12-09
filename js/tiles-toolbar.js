@@ -1,4 +1,4 @@
-TilesToolbar = {
+TilesToolbar = Base.extend({
     init: function () {
         this.cacheDom();
         this.bindDom();
@@ -35,4 +35,4 @@ TilesToolbar = {
             EM.emit('changedSelectedTile', { target: this, nb: len($(this).prevAll()) })
         });
     }
-};
+});
