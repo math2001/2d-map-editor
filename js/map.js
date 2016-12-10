@@ -197,7 +197,8 @@ Map_ = Base.extend({
         })
 
         this.$map.on('mousedown', '.map-cell', function saveMouseDown(e) {
-            if (e.button != 0) { return }
+            if (e.button != 0) return;
+            e.preventDefault();
             _this.mouseIsPressed = true
             updateSpriteNb.call(this)
         }).on('mousemove', '.map-cell', updateSpriteNb);
