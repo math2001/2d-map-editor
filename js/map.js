@@ -171,10 +171,15 @@ Map_ = Base.extend({
         }
 
         function updateMap(data) {
-            _this.convertObjToMap(_this.convertXToObj(data.type, data.content, data.onUserError));
+            if (data.isobj) {
+                var obj = data.content;
+            } else {
+                var obj = _this.convertXToObj(data.type, data.content, data.onUserError)
+            }
+            _this.convertObjToMap(obj);
         }
 
-        EM.on('chooseNewSprites', updateStyleSheet);
+        EM.on('newSpritesLoaded', updateStyleSheet);
 
         EM.on('newMapLoaded', updateMap);
     },

@@ -8,7 +8,6 @@ var _URL = window.URL || window.webkitURL; // used to get the size of an image
 
 
     TilesToolbar.init();
-    ChooseSprite.init();
     MapConverter.init(Map_.init().$map);
     Exporter.init();
     Loader.init();

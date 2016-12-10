@@ -7,7 +7,7 @@ TilesToolbar = Base.extend({
 
     listenEvents: function () {
         var _this = this
-        EM.on('chooseNewSprites', this.updateTiles.bind(this))
+        EM.on('newSpritesLoaded', this.updateTiles.bind(this))
 
         EM.on('changedSelectedTile', function (infos) {
             _this.$tiles.find('.tile.selected').removeClass('selected');

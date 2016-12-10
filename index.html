@@ -51,52 +51,10 @@
 
     <div class="container">
 
-        <p class="toolbar">
-            <button class="btn btn-primary" data-toggle="modal" data-target="#choose-sprite">Choose sprites</button>
-        </p>
         <ul class="tiles" id="tiles">
             <li class="mute">Choose some sprites...</li>
         </ul>
         <table id="map"></table>
-    </div>
-    <div class="modal fade" tabindex="-1" role="dialog" id="choose-sprite">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Choose some sprites (in one image)</h4>
-                </div>
-                <div class="modal-body">
-                    <div id="choose-sprite-alerts">
-
-                    </div>
-                    <form action="" class="form-horizontal" id="choose-sprite-form">
-                        <div class="form-group">
-                            <label for="choose-sprite-input" class="col-sm-2 control-label">Sprites</label>
-                            <div class="col-sm-10">
-                                <input type="file" id="choose-sprite-input">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="choose-sprite-width" class="col-sm-2 control-label">Width</label>
-                            <div class="col-sm-10">
-                                <input class="form-control" type="number" id="choose-sprite-width" value="32">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="choose-sprite-height" class="col-sm-2 control-label">Height</label>
-                            <div class="col-sm-10">
-                                <input class="form-control" type="number" id="choose-sprite-height" value="32">
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal" id="choose-sprite-submit">Choose</button>
-                </div>
-            </div>
-        </div>
     </div>
     <div class="modal fade" tabindex="-1" role="dialog" id="export">
         <div class="modal-dialog" role="document">
@@ -185,14 +143,14 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/tools/jquery.contextmenu.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.js"></script>
 
 <script type="text/javascript" src="js/tools/string-format.js"></script>
 <script type="text/javascript" src="js/tools/function.js"></script>
 
 <script type="text/javascript" src="js/base.js"></script>
 
-<script type="text/javascript" src="js/sub-pub.js"></script>
-<script type="text/javascript" src="js/choose-sprite.js"></script>
+<script type="text/javascript" src="js/events-manager.js"></script>
 <script type="text/javascript" src="js/tiles-toolbar.js"></script>
 <script type="text/javascript" src="js/map.js"></script>
 <script type="text/javascript" src="js/map-converter.js"></script>

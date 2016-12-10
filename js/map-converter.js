@@ -54,12 +54,16 @@ MapConverter = Base.extend({
                 return '';
             }
         }
-        
+
         if (stringify) {
             return convertObjTo(type, convertMapToObj());
         } else {
             return convertMapToObj();
         }
+    },
+
+    canConvert: function (type) {
+        return ~$.inArray(type, MapConverter.known_types);
     },
 
     convertXToHTMLMap: function (type, string, showAlert) {

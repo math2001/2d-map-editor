@@ -5,8 +5,10 @@
 
 - auto show popup when dragging file
 - change tile focus with the keyboard
-- load from file
-- export in different format
 - change context menu css
 - save in a cookie
-- specify width
+- specify width/height
+- preventDefault on mousedown
+
+- load from file @done
+- export in different format @ok

@@ -8,7 +8,7 @@ Exporter = Base.extend({
 
     listenEvents: function () {
         var _this = this;
-        EM.on('chooseNewSprites', function saveSpritesName(data) {
+        EM.on('newSpritesLoaded', function saveSpritesName(data) {
             _this.sprites = data;
         });
     },
@@ -43,7 +43,7 @@ Exporter = Base.extend({
                 this.showAlert('info', 'It is useless to export you map using this format (<code>.2d-map</code>) because you haven\'t chose any sprites yet.');
             }
             // this.preview is an object, not a string (because of the last arg)
-            this.preview = JSON.stringify({map: this.preview, spritesInfos: this.sprites})
+            this.preview = JSON.stringify({map: this.preview, sprites: this.sprites})
         }
         this.$preview.html(this.preview);
         if (e.data && e.data.fromToggler) this.$modal.modal('show');
