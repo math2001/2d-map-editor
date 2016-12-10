@@ -25,7 +25,7 @@ Exporter = Base.extend({
     },
 
     bindDom: function () {
-        this.$toggler.bind('click', this.updatePreview.bind(this));
+        this.$toggler.bind('click', {fromToggler: true}, this.updatePreview.bind(this));
         this.$formatBtn.bind('change', this.updatePreview.bind(this));
         this.$download.bind('click', this.download.bind(this));
     },
@@ -34,52 +34,19 @@ Exporter = Base.extend({
         download('{}.{}'.format(this.spritesName || 'map', this.format), this.preview)
     },
 
-    convertMapToObject: function () {
-        var map = [],
-            $rows = this.$map.children(),
-            $cols,
-            row;
-        for (var i = 0; i < $rows.length; i++) {
-            $cols = $($rows[i]).children();
-            row = []
-            for (var j = 0; j < $cols.length; j++) {
-                row.push(parseInt($($cols[j]).attr('data-nb')))
-            }
-            map.push(row);
-        }
-        return map
-    },
-
-    convertObjTo: function (type, obj) {
-        if (type == 'txt') {
-            var text = '';
-            for (var i = 0; i < obj.length; i++) {
-                for (var j = 0; j < obj[i].length; j++) {
-                    text += obj[i][j];
-                }
-                text += '\n';
-            }
-            return text;
-        } else if (type == 'json') {
-            return JSON.stringify(obj);
-        } else if (type == '2d-map') {
-            if (!this.sprites) {
-                this.showAlert('error', 'You need to choose some sprites before to save it as a <code>.2d-map</code>.');
-
-            }
-            return JSON.stringify($.extend({
-                map: obj
-            }, this.sprites));
-        } else {
-            this.showAlert('error', 'Wrong type to convert map to ({}). Internal Error'.format(type));
-        }
-    },
-
-    updatePreview: function () {
+    updatePreview: function (e) {
         this.format = this.$form.find('label.active').find('input').data('convert-to');
-        this.preview = this.convertObjTo(this.format, this.convertMapToObject())
+        this.preview = MapConverter.convertHTMLMapTo((this.format == '2d-map' ? 'json' : this.format),
+                                                     this.showAlert.bind(this), this.format != '2d-map');
+        if (this.format == '2d-map') {
+            if (!this.sprites) {
+                this.showAlert('info', 'It is useless to export you map using this format (<code>.2d-map</code>) because you haven\'t chose any sprites yet.');
+            }
+            // this.preview is an object, not a string (because of the last arg)
+            this.preview = JSON.stringify({map: this.preview, spritesInfos: this.sprites})
+        }
         this.$preview.html(this.preview);
-        this.$modal.modal('show');
+        if (e.data && e.data.fromToggler) this.$modal.modal('show');
     },
 
     showAlert: function (type, msg) {

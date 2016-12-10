@@ -62,3 +62,8 @@ var UserError = function (message) {
     err.name = 'UserError';
     return err;
 }
+
+
+$.fn.exists = function () {
+    console.log(this.length != 0)
+}

@@ -17,12 +17,19 @@ Loader = Base.extend({
     },
 
     fireEvent: function (e) {
+        // fire the right event, depending on the file
         var file = this.$input[0].files[0];
         if (!file) {
             this.showAlert('error', 'You need to choose a file.');
             return 'keep open';
         }
+
         var type = file.name.split('.').slice(-1);
+
+        // if (type == '')
+
+        return;
+
         if (type == '2d-map') {
             return getContent(file, function (content) {
                 var data = JSON.parse(content);
@@ -38,22 +45,20 @@ Loader = Base.extend({
     },
 
     toggleSpriteInfo: function (e) {
-        console.log(e.data._this.$spritesInfos.length);
         if (e.data._this.$input[0].files[0].type.match(/image.*/)) {
-            e.data._this.$spritesInfos.slideDown();
+            e.data._this.$spritesInfos.fadeIn();
         } else {
-            e.data._this.$spritesInfos.slideUp();
+            e.data._this.$spritesInfos.fadeOut();
         }
     },
 
     bindDom: function () {
         var _this = this;
         this.$submit.bind('click', function submitLoad() {
-            if (!_this.fireEvent.call(_this)) {
+            if (!_this.fireEvent.call(_this)) { // successfull
                 _this.$modal.modal('hide');
             }
         });
-
         this.$input.bind('change', {_this: this}, this.toggleSpriteInfo);
     },
 });

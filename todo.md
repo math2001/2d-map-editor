@@ -9,3 +9,4 @@
 - export in different format
 - change context menu css
 - save in a cookie
+- specify width
